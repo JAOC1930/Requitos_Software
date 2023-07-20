@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<html>
+<head>
+    <title>Archivos Subidos</title>
+</head>
+<body>
+    <h1 style="color: #33638B;">Ingenieria Web</h1>
+    <ul>
+        {% for archivo in archivos %}
+        <li>{{ archivo.archivo.name }} - Subido el {{ archivo.fecha_subida }}</li>
+        {% endfor %}
+    </ul>
+    <h2 style="color: #33638B;">Descripción</h2>
+</body>
+</html>
+{% endblock %}

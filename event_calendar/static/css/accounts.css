@@ -1,0 +1,67 @@
+.login {
+  width: 300px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.login h3 {
+  text-align: center;
+}
+
+.boton {
+  display: block;
+  margin: 0 auto;
+  margin-top: 3%;
+  width: 50%;
+  background-color: #6E91AE;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.contenedor-imagen {
+  position: relative;
+  width: 100%;
+  height: 98vh; /* Puedes ajustar la altura según tus necesidades */
+  overflow: hidden;
+}
+
+.contenedor-imagen .hola {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+.contenedor-imagen .logo {
+  position: absolute;
+  bottom: 0;
+  top: 15px;
+  left: 15px;
+  width: 100%;
+  height: auto;
+}
+
+
+.login label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.login input {
+  display: block;
+}
+
+.login {
+  position: absolute;
+  width: 30%;
+  height: 50%;
+  top: 50%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 20px;
+}
+
