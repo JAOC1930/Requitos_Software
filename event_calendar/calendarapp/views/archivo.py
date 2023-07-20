@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from calendarapp.forms import ArchivoForm
-from calendarapp.models.archivos import Archivos
+from calendarapp.forms import ArchivoForm, AsignacionForm
+from calendarapp.models.archivos import Archivos, Asignacion
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+
 
 @login_required
 def upload_file(request):
@@ -22,17 +24,29 @@ def archivos_subidos(request):
     archivos = Archivos.objects.filter(user=request.user)
     return render(request, 'archivos_subidos.html', {'archivos': archivos})    
 
-# def subir_archvio(request):
-#     """
-#     """
-#     if request.method=='POST':
-#         formulario = ArchivoForm(request.POST)
-#         print(formulario.errors)
-#         if formulario.is_valid():
-#             formulario.save() # se guarda en la base de datos
-#             return redirect(subir_archvio)
-#     else:
-#         formulario = ArchivoForm()
-#     diccionario = {'formulario': formulario}
+def agregar_asignacion(request):
+    if request.method == 'POST':
+        form = AsignacionForm(request.POST)
+        if form.is_valid():
+            asignacion = form.save()
 
-#     return render(request, 'archivo.html', diccionario)
+            # Obtener el usuario seleccionado en el formulario
+            user = form.cleaned_data['user']
+
+            # Enviar el correo electrónico
+            send_mail(
+                subject='Asignación exitosa',
+                message=f'Hola ari, tu correo es este: {user.email}, confirma para ir a tomar jajajaj "{asignacion.nombre}".',
+                from_email='tu_correo@gmail.com',  # Coloca aquí tu correo desde el que enviarás los correos
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+
+            return redirect(request.path)  # Redirige a la vista que quieras después de guardar el formulario
+    else:
+        form = AsignacionForm()
+
+    return render(request, 'agregar_asignacion.html', {'form': form})
+
+
+

@@ -1,7 +1,7 @@
 from django.forms import ModelForm, DateInput
 from calendarapp.models import Event, EventMember
 from django import forms
-from calendarapp.models.archivos import Archivos
+from calendarapp.models.archivos import Archivos, Asignacion
 
 class EventForm(ModelForm):
     class Meta:
@@ -51,3 +51,7 @@ class ArchivoForm(forms.ModelForm):
         super(ArchivoForm, self).__init__(*args, **kwargs)
         self.fields['archivo'].required = False
 
+class AsignacionForm(forms.ModelForm):
+    class Meta:
+        model = Asignacion
+        fields = ['nombre', 'user']

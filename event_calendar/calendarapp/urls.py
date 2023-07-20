@@ -28,4 +28,5 @@ urlpatterns = [
     ),
     path('upload/', archivo.upload_file, name='upload_file'),
     path('archivos-subidos/', archivo.archivos_subidos, name='archivos_subidos'),
+    path('crear-asignacion/', archivo.agregar_asignacion, name='crear_asignacion'),
 ]

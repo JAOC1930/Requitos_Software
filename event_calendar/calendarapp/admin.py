@@ -1,6 +1,6 @@
 from django.contrib import admin
 from calendarapp import models
-from .models.archivos import Archivos
+from .models.archivos import Archivos, Asignacion
 
 @admin.register(models.Event)
 class EventAdmin(admin.ModelAdmin):
@@ -30,3 +30,10 @@ class ArchivoAdmin(admin.ModelAdmin):
     list_filter = ['archivo','user', 'fecha_subida']
 
 admin.site.register(Archivos, ArchivoAdmin)
+
+class AsignacionAdmin(admin.ModelAdmin):
+    model: Asignacion
+    list_display = ['nombre', 'user']
+    list_filter = ['nombre', 'user']
+
+admin.site.register(Asignacion, AsignacionAdmin)
