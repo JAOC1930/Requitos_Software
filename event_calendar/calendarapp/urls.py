@@ -30,3 +30,4 @@ urlpatterns = [
     path('archivos-subidos/', archivo.archivos_subidos, name='archivos_subidos'),
     path('crear-asignacion/', archivo.agregar_asignacion, name='crear_asignacion'),
 ]
+

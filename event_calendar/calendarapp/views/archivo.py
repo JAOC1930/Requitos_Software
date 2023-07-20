@@ -36,7 +36,7 @@ def agregar_asignacion(request):
             # Enviar el correo electrónico
             send_mail(
                 subject='Asignación exitosa',
-                message=f'Hola ari, tu correo es este: {user.email}, confirma para ir a tomar jajajaj "{asignacion.nombre}".',
+                message=f'Hola {user.email}, se se ha asignado la tarea "{asignacion.nombre}".',
                 from_email='tu_correo@gmail.com',  # Coloca aquí tu correo desde el que enviarás los correos
                 recipient_list=[user.email],
                 fail_silently=False,
