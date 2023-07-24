@@ -52,8 +52,26 @@ class ArchivoForm(forms.ModelForm):
         self.fields['archivo'].required = False
 
 class AsignacionForm(forms.ModelForm):
-    fecha_inicial = forms.DateTimeField(input_formats=['%Y-%m-%d %H:%M:%S'])
-    fecha_final = forms.DateTimeField(input_formats=['%Y-%m-%d %H:%M:%S'])
+    fecha_inicial = forms.DateTimeField(
+        input_formats=['%Y-%m-%d %H:%M:%S'],
+        widget=forms.DateTimeInput(
+            attrs={"type": "datetime-local", "class": "form-control"},
+            format="%Y-%m-%dT%H:%M:%S",
+        )
+    )
+    fecha_final = forms.DateTimeField(
+        input_formats=['%Y-%m-%d %H:%M:%S'],
+        widget=forms.DateTimeInput(
+            attrs={"type": "datetime-local", "class": "form-control"},
+            format="%Y-%m-%dT%H:%M:%S",
+        )
+    )
+
     class Meta:
         model = Asignacion
         fields = ['nombre', 'carrera', 'ciclo', 'materia', 'user', 'fecha_inicial', 'fecha_final', 'descripcion']
+
+    def __init__(self, *args, **kwargs):
+        super(AsignacionForm, self).__init__(*args, **kwargs)
+        self.fields["fecha_inicial"].input_formats = ("%Y-%m-%d %H:%M:%S",)
+        self.fields["fecha_final"].input_formats = ("%Y-%m-%d %H:%M:%S",)
