@@ -52,6 +52,8 @@ class ArchivoForm(forms.ModelForm):
         self.fields['archivo'].required = False
 
 class AsignacionForm(forms.ModelForm):
+    fecha_inicial = forms.DateTimeField(input_formats=['%Y-%m-%d %H:%M:%S'])
+    fecha_final = forms.DateTimeField(input_formats=['%Y-%m-%d %H:%M:%S'])
     class Meta:
         model = Asignacion
-        fields = ['nombre', 'user']
+        fields = ['nombre', 'carrera', 'ciclo', 'materia', 'user', 'fecha_inicial', 'fecha_final', 'descripcion']

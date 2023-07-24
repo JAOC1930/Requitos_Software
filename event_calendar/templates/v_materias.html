@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h1>Materias del ciclo: {{ ciclo.numCiclo }}</h1>
+    {% if materias %}
+        <ul>
+            {% for materia in materias %}
+                <li>
+                    {{ materia.nombre }} - Créditos: {{ materia.numCreditos }} - Horas: {{ materia.numHoras }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay materias asociadas a este ciclo.</p>
+    {% endif %}
+</div> 
+{% endblock %}

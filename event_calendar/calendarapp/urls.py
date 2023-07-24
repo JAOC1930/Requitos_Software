@@ -29,5 +29,9 @@ urlpatterns = [
     path('upload/', archivo.upload_file, name='upload_file'),
     path('archivos-subidos/', archivo.archivos_subidos, name='archivos_subidos'),
     path('crear-asignacion/', archivo.agregar_asignacion, name='crear_asignacion'),
-]
+    path('visualizar/', archivo.visualizar, name='visualizar'),
+    path('visualizar/ciclo/<int:id_carrera>/', archivo.obtener_Ciclo, name='v_ciclo'),
+    path('visualizar/materia/<int:id>', archivo.obtener_Materia, name='v_materias'),
+
+]   
 

@@ -1,20 +1,38 @@
 from django.db import models
 from accounts.models import User
+from datetime import datetime
 
 class Archivos(models.Model):
     
     archivo = models.FileField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_archivo")
     fecha_subida = models.DateTimeField(auto_now_add=True)
-
-
+     
+    def __str__(self):
+            return "%s %s %s" % (self.archivo,
+                    self.user,
+                    self.fecha_subida)
 
 class Carrera(models.Model):
     nombre = models.CharField(max_length=50)
-    
+    def __str__(self):
+            return "%s" % (self.nombre)    
 
 class Ciclo(models.Model):
     numCiclo = models.IntegerField()
+    def __str__(self):
+            return "%s" % (self.numCiclo)  
+
+class CarreraCiclo(models.Model):
+    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name="carrera_c")
+    ciclo = models.ForeignKey(Ciclo, on_delete=models.CASCADE, related_name="ciclo_m") 
+    class Meta:
+        unique_together = ['carrera', 'ciclo']
+    
+    def __str__(self):
+            return "%s %s" % (self.carrera,
+                    self.ciclo)
+
 
 
 class Materia(models.Model):
@@ -22,11 +40,7 @@ class Materia(models.Model):
     numCreditos = models.IntegerField()
     numHoras = models.IntegerField()
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name="materia_carrera")
-
-class CarreraCiclo(models.Model):
-    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name="carrera_c")
-    ciclo = models.ForeignKey(Ciclo, on_delete=models.CASCADE, related_name="ciclo_m") 
-
+    ciclo = models.ForeignKey(Ciclo, on_delete=models.CASCADE, related_name="materia_ciclo")
 
 class Asignacion(models.Model):
 
@@ -35,7 +49,11 @@ class Asignacion(models.Model):
     ciclo = models.ForeignKey(Ciclo, on_delete=models.CASCADE, related_name="asignacion_ciclo")
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE, related_name="asignacion_materia")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_asignacion")
+    fecha_inicial = models.DateTimeField()
+    fecha_final = models.DateTimeField()
+    descripcion = models.CharField(max_length= 200)
 
     def __str__(self):
-        return self.nombre
+            return "%s %s %s %s %s" % (self.nombre,
+                    self.carrera, self.ciclo, self.materia, self.user)
     

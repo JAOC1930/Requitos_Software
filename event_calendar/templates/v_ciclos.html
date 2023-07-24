@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h1>Ciclos de la carrera: {{ carrera.nombre }}</h1>
+    {% if ciclos %}
+        <ul>
+            {% for carrera_ciclo in ciclos %}
+                <li>
+                    <a href="{% url 'calendarapp:v_materias' carrera_ciclo.id %}">{{ carrera_ciclo.ciclo.numCiclo }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay ciclos asociados a esta carrera.</p>
+    {% endif %}
+</div> 
+{% endblock %}

@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from calendarapp.forms import ArchivoForm, AsignacionForm
-from calendarapp.models.archivos import Archivos, Asignacion
+from calendarapp.models.archivos import Archivos, Asignacion, Carrera, Ciclo, Materia, CarreraCiclo
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-
+from calendarapp.models import EventMember, Event
+from calendarapp.forms import EventForm, AddMemberForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy, reverse
 
 @login_required
 def upload_file(request):
@@ -45,8 +48,29 @@ def agregar_asignacion(request):
             return redirect(request.path)  # Redirige a la vista que quieras después de guardar el formulario
     else:
         form = AsignacionForm()
-
+        
     return render(request, 'agregar_asignacion.html', {'form': form})
 
+def visualizar(request):
+    carrera = Carrera.objects.all()
+    return render(request, 'visualizar.html', {'carreras': carrera})
 
+def obtener_Ciclo(request, id_carrera):
+    try:
+        carrera = Carrera.objects.get(pk=id_carrera)
+        ciclos = CarreraCiclo.objects.filter(carrera=carrera)
+    except Carrera.DoesNotExist:
+        # Si la carrera no existe, puedes manejarlo como desees (por ejemplo, mostrar un mensaje de error).
+        ciclos = []
 
+    return render(request, 'v_ciclos.html', {'ciclos': ciclos})
+
+def obtener_Materia(request, id):
+    try:
+        ciclo = Ciclo.objects.get(pk=id)
+        materias = Materia.objects.filter(ciclo=ciclo)
+    except Ciclo.DoesNotExist:
+        # Si el ciclo no existe, puedes manejarlo como desees (por ejemplo, mostrar un mensaje de error).
+        materias = []
+
+    return render(request, 'v_materias.html', {'ciclo': ciclo, 'materias': materias})
