@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h1>Archivo: {{ materia.nombre }}</h1>
+    {% if archivos %}
+        <ul>
+            {% for archivo in archivos %}
+                <li>
+                    <a href="">{{ archivo.archivo }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay archivos asociadas a este materia.</p>
+    {% endif %}
+</div> 
+{% endblock %}

@@ -7,7 +7,7 @@
         <ul>
             {% for materia in materias %}
                 <li>
-                    {{ materia.nombre }} - Créditos: {{ materia.numCreditos }} - Horas: {{ materia.numHoras }}
+                    <a href="{% url 'calendarapp:v_archivoM' materia.id %}">{{ materia.nombre }}</a>
                 </li>
             {% endfor %}
         </ul>

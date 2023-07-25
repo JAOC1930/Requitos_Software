@@ -39,7 +39,7 @@ def agregar_asignacion(request):
             # Enviar el correo electrónico
             send_mail(
                 subject='Asignación exitosa',
-                message=f'Hola {user.email}, se se ha asignado la tarea "{asignacion.nombre}".',
+                message=f'Hola {user.email}, se ha asignado la tarea "{asignacion.nombre}".\nFecha de inicio: {asignacion.fecha_inicial}.\nFecha de entrega: {asignacion.fecha_final}.\nDescripción: {asignacion.descripcion}',
                 from_email='tu_correo@gmail.com',  # Coloca aquí tu correo desde el que enviarás los correos
                 recipient_list=[user.email],
                 fail_silently=False,
@@ -63,7 +63,7 @@ def obtener_Ciclo(request, id_carrera):
         # Si la carrera no existe, puedes manejarlo como desees (por ejemplo, mostrar un mensaje de error).
         ciclos = []
 
-    return render(request, 'v_ciclos.html', {'ciclos': ciclos})
+    return render(request, 'v_ciclos.html', {'ciclos': ciclos, 'carreras': carrera})
 
 def obtener_Materia(request, id):
     try:
@@ -74,3 +74,13 @@ def obtener_Materia(request, id):
         materias = []
 
     return render(request, 'v_materias.html', {'ciclo': ciclo, 'materias': materias})
+
+def obtenerArchivoM(request, id):
+    try:
+        materia = Materia.objects.get(pk=id)
+        archivos = Archivos.objects.filter(materia=materia)
+    except Materia.DoesNotExist:
+        # Si el ciclo no existe, puedes manejarlo como desees (por ejemplo, mostrar un mensaje de error).
+        archivos = []
+
+    return render(request, 'v_archivosM.html', {'materias': materia, 'archivos': archivos})

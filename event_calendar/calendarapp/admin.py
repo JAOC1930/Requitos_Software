@@ -24,13 +24,6 @@ class EventMemberAdmin(admin.ModelAdmin):
     list_display = ["id", "event", "user", "created_at", "updated_at"]
     list_filter = ["event"]
 
-class ArchivoAdmin(admin.ModelAdmin):
-    model = Archivos
-    list_display = ['archivo','user', 'fecha_subida']
-    list_filter = ['archivo','user', 'fecha_subida']
-
-admin.site.register(Archivos, ArchivoAdmin)
-
 class CarreraAdmin(admin.ModelAdmin):
     model = Carrera
     list_display = ['nombre']
@@ -64,3 +57,10 @@ class AsignacionAdmin(admin.ModelAdmin):
     list_filter = ['nombre', 'carrera', 'ciclo', 'materia', 'user', 'fecha_inicial', 'fecha_final', 'descripcion']
 
 admin.site.register(Asignacion, AsignacionAdmin)
+
+class ArchivoAdmin(admin.ModelAdmin):
+    model = Archivos
+    list_display = ['archivo','user', 'fecha_subida', 'materia']
+    list_filter = ['archivo','user', 'fecha_subida', 'materia']
+
+admin.site.register(Archivos, ArchivoAdmin)

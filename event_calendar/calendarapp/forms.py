@@ -45,7 +45,7 @@ class AddMemberForm(forms.ModelForm):
 class ArchivoForm(forms.ModelForm):
     class Meta:
         model = Archivos
-        fields = ['archivo']
+        fields = ['materia','archivo']
 
     def __init__(self, *args, **kwargs):
         super(ArchivoForm, self).__init__(*args, **kwargs)

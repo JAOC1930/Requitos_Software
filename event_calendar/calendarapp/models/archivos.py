@@ -2,17 +2,6 @@ from django.db import models
 from accounts.models import User
 from datetime import datetime
 
-class Archivos(models.Model):
-    
-    archivo = models.FileField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_archivo")
-    fecha_subida = models.DateTimeField(auto_now_add=True)
-     
-    def __str__(self):
-            return "%s %s %s" % (self.archivo,
-                    self.user,
-                    self.fecha_subida)
-
 class Carrera(models.Model):
     nombre = models.CharField(max_length=50)
     def __str__(self):
@@ -42,6 +31,9 @@ class Materia(models.Model):
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name="materia_carrera")
     ciclo = models.ForeignKey(Ciclo, on_delete=models.CASCADE, related_name="materia_ciclo")
 
+    def __str__(self) :
+        return "%s" % (self.nombre)
+
 class Asignacion(models.Model):
 
     nombre = models.CharField(max_length=30)
@@ -57,3 +49,14 @@ class Asignacion(models.Model):
             return "%s %s %s %s %s" % (self.nombre,
                     self.carrera, self.ciclo, self.materia, self.user)
     
+
+class Archivos(models.Model):
+    
+    archivo = models.FileField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_archivo")
+    fecha_subida = models.DateTimeField(auto_now_add=True)
+    materia = models.ForeignKey(Materia, on_delete=models.CASCADE, related_name='archivo_materia', null=True)
+    def __str__(self):
+            return "%s %s %s" % (self.archivo,
+                    self.user,
+                    self.fecha_subida)

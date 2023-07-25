@@ -2,15 +2,15 @@
 
 {% block content %}
 <div>
-    <h1>Ciclos de la carrera: {{ carrera.nombre }}</h1>
+    <h1>Ciclos de la carrera: {{ carreras.nombre }}</h1>
     {% if ciclos %}
-        <ul>
+        <div class="container">
             {% for carrera_ciclo in ciclos %}
-                <li>
+                <div class="carrera">
                     <a href="{% url 'calendarapp:v_materias' carrera_ciclo.id %}">{{ carrera_ciclo.ciclo.numCiclo }}</a>
-                </li>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
         <p>No hay ciclos asociados a esta carrera.</p>
     {% endif %}

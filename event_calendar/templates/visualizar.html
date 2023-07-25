@@ -1,11 +1,22 @@
 {% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <div class="container"> <!-- Aplica la clase "container" al contenedor principal -->
+        {% for e in carreras %}
+            <div class="carrera"> <!-- Aplica la clase "carrera" al contenedor de cada carrera -->
+                <a href="{% url 'calendarapp:v_ciclo' e.id %}">{{e.nombre}}</a>
+            </div>
+        {% endfor %}
+    </div> 
+    {% endblock %} 
+</body>
+</html>
 
-{% block content %}
-<div>
-    {% for e in carreras %}
-        <li>
-            <a href="{% url 'calendarapp:v_ciclo' e.id %}">{{e.nombre}}</a>
-        </li>     
-    {% endfor %}
-</div> 
-{% endblock %}
