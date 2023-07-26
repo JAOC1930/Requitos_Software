@@ -17,6 +17,15 @@
             margin-bottom: 20px;
         }
 
+        .filters {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #33638B;
+            margin-top: 30px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -32,33 +41,31 @@
             background-color: #f2f2f2;
         }
 
-        ul.archivos-list {
-            list-style-type: none;
-            padding: 0;
+        .archivo-row {
+            display: table-row;
         }
 
-        ul.archivos-list li {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            background-color: #fff;
-            padding: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
-        }
-
-        .filters {
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            color: #33638B;
-            margin-top: 30px;
-        }
-
-        /* Estilos para ocultar filas que no coinciden con el filtro */
-        .hidden-row {
+        .archivo-row.hidden-row {
             display: none;
+        }
+
+        /* Estilos para hacer la tabla responsiva */
+        .table-container {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            /* Estilos para pantallas más pequeñas (tabletas y móviles) */
+            table {
+                font-size: 14px;
+            }
+
+            .table-container {
+                /* Para mejorar el desplazamiento horizontal en dispositivos móviles */
+                -webkit-overflow-scrolling: touch;
+                overflow-y: hidden;
+            }
         }
     </style>
 </head>
@@ -76,24 +83,26 @@
         </select>
     </div>
 
-    <table>
-        <tr>
-            <th>Nombre del Archivo</th>
-            <th>Fecha de Subida</th>
-            <th>Periodo</th>
-            <th>Materia</th>
-            <th>Carrera</th>
-        </tr>
-        {% for archivo in archivos %}
-        <tr class="archivo-row" data-materia="{{ archivo.materia.nombre }}">
-            <td>{{ archivo.archivo.name }}</td>
-            <td>{{ archivo.fecha_subida }}</td>
-            <td>Abril-Agosto 2023</td>
-            <td>{{ archivo.materia.nombre }}</td>
-            <td>{{ archivo.materia.carrera.nombre }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>Nombre del Archivo</th>
+                <th>Fecha de Subida</th>
+                <th>Periodo</th>
+                <th>Materia</th>
+                <th>Carrera</th>
+            </tr>
+            {% for archivo in archivos %}
+                <tr class="archivo-row" data-materia="{{ archivo.materia.nombre }}">
+                    <td>{{ archivo.archivo.name }}</td>
+                    <td>{{ archivo.fecha_subida }}</td>
+                    <td>Abril-Agosto 2023</td>
+                    <td>{{ archivo.materia.nombre }}</td>
+                    <td>{{ archivo.materia.carrera.nombre }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 
     <h2>Descripción</h2>
 
