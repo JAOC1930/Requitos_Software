@@ -43,13 +43,13 @@ class AddMemberForm(forms.ModelForm):
 
 
 class ArchivoForm(forms.ModelForm):
+    def __init__(self, user=None, *args, **kwargs):
+        super(ArchivoForm, self).__init__(*args, **kwargs)
+        self.fields['materia'].queryset = Materia.objects.filter(asignacion_materia__user=user)
+
     class Meta:
         model = Archivos
-        fields = ['materia','archivo']
-
-    def __init__(self, *args, **kwargs):
-        super(ArchivoForm, self).__init__(*args, **kwargs)
-        self.fields['archivo'].required = False
+        fields = ['materia', 'archivo']
 
 class AsignacionForm(forms.ModelForm):
     fecha_inicial = forms.DateTimeField(

@@ -11,16 +11,16 @@ from calendarapp.models import Event
 @login_required
 def upload_file(request):
     if request.method == 'POST':
-        form = ArchivoForm(request.POST, request.FILES)
+        form = ArchivoForm(request.user, request.POST, request.FILES)  # Pasamos request.user como argumento
         if form.is_valid():
             archivo = form.cleaned_data['archivo']
             if archivo:
-                nuevo_archivo = form.save(commit=False)  # Guarda el formulario pero no en la base de datos todavía
-                nuevo_archivo.user = request.user  # Establece el usuario actual como el valor del campo 'user'
-                nuevo_archivo.save()  # Ahora guarda el objeto 'Archivos' en la base de datos
-            return redirect(request.path)  # Cambiar redirect(index) por redirect('index')
+                nuevo_archivo = form.save(commit=False)
+                nuevo_archivo.user = request.user
+                nuevo_archivo.save()
+            return redirect(request.path)
     else:
-        form = ArchivoForm()
+        form = ArchivoForm(user=request.user)  # También pasamos request.user aquí
     return render(request, 'archivo.html', {'form': form})
     
 def archivos_subidos(request):

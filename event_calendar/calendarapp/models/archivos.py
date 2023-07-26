@@ -56,6 +56,7 @@ class Archivos(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_archivo")
     fecha_subida = models.DateTimeField(auto_now_add=True)
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE, related_name='archivo_materia', null=True)
+    asignacion = models.ForeignKey(Asignacion, on_delete=models.CASCADE, related_name='archivo_asignacion')
     def __str__(self):
             return "%s %s %s" % (self.archivo,
                     self.user,

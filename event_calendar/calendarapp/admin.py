@@ -53,14 +53,14 @@ admin.site.register(Materia, MateriaAdmin)
 
 class AsignacionAdmin(admin.ModelAdmin):
     model = Asignacion
-    list_display = ['nombre', 'carrera', 'ciclo', 'materia', 'user', 'fecha_inicial', 'fecha_final', 'descripcion']
+    list_display = ['id','nombre', 'carrera', 'ciclo', 'materia', 'user', 'fecha_inicial', 'fecha_final', 'descripcion']
     list_filter = ['nombre', 'carrera', 'ciclo', 'materia', 'user', 'fecha_inicial', 'fecha_final', 'descripcion']
 
 admin.site.register(Asignacion, AsignacionAdmin)
 
 class ArchivoAdmin(admin.ModelAdmin):
     model = Archivos
-    list_display = ['archivo','user', 'fecha_subida', 'materia']
-    list_filter = ['archivo','user', 'fecha_subida', 'materia']
+    list_display = ['archivo','user', 'fecha_subida', 'materia', 'asignacion']
+    list_filter = ['archivo','user', 'fecha_subida', 'materia', 'asignacion']
 
 admin.site.register(Archivos, ArchivoAdmin)

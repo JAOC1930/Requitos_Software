@@ -5,15 +5,73 @@
 <html>
 <head>
     <title>Archivos Subidos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            color: #33638B;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        ul.archivos-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul.archivos-list li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        h2 {
+            color: #33638B;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
-    <h1 style="color: #33638B;">Ingenieria Web</h1>
-    <ul>
+    <h1>Archivos Cargados</h1>
+    <table>
+        <tr>
+            <th>Nombre del Archivo</th>
+            <th>Fecha de Subida</th>
+            <th>Periodo</th>
+            <th>Materia</th>
+        </tr>
         {% for archivo in archivos %}
-        <li>{{ archivo.archivo.name }} - Subido el {{ archivo.fecha_subida }}</li>
+        <tr>
+            <td>{{ archivo.archivo.name }}</td>
+            <td>{{ archivo.fecha_subida }}</td>
+            <td>Abril-Agosto 2023</td>
+            <td>{{ archivo.materia.nombre }}</td>
+        </tr>
         {% endfor %}
-    </ul>
-    <h2 style="color: #33638B;">Descripción</h2>
+    </table>
 </body>
 </html>
 {% endblock %}
