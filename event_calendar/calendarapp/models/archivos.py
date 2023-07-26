@@ -60,3 +60,4 @@ class Archivos(models.Model):
             return "%s %s %s" % (self.archivo,
                     self.user,
                     self.fecha_subida)
+    

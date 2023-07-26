@@ -7,6 +7,10 @@ from calendarapp.models import EventMember, Event
 from calendarapp.forms import EventForm, AddMemberForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
+from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
+
+
 
 @login_required
 def upload_file(request):
@@ -84,3 +88,36 @@ def obtenerArchivoM(request, id):
         archivos = []
 
     return render(request, 'v_archivosM.html', {'materias': materia, 'archivos': archivos})
+
+def get_ciclos(request):
+    carrera_id = request.GET.get('carrera_id', None)
+    if carrera_id is not None:
+        try:
+            carrera_id = int(carrera_id)
+            carrera = Carrera.objects.get(pk=carrera_id)
+            ciclos = carrera.carrera_c.all()
+            ciclos_list = [{'id': ciclo.ciclo.id, 'numCiclo': ciclo.ciclo.numCiclo} for ciclo in ciclos]
+            return JsonResponse({'ciclos': ciclos_list})
+        except (ValueError, ObjectDoesNotExist):
+            return JsonResponse({'error': 'carrera_id inválido o carrera no encontrada.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Parámetro carrera_id faltante.'}, status=400)
+
+def get_materias(request):
+    carrera_id = request.GET.get('carrera_id', None)
+    ciclo_id = request.GET.get('ciclo_id', None)
+    if carrera_id is not None and ciclo_id is not None:
+        try:
+            carrera_id = int(carrera_id)
+            ciclo_id = int(ciclo_id)
+            carrera = Carrera.objects.get(pk=carrera_id)
+            ciclo = Ciclo.objects.get(pk=ciclo_id)
+            materias = carrera.carrera_c.filter(ciclo__id=ciclo_id).first().ciclo_m.all()
+            materias_list = [{'id': materia.id, 'nombre': materia.nombre} for materia in materias]
+            return JsonResponse({'materias': materias_list})
+        except (ValueError, ObjectDoesNotExist):
+            return JsonResponse({'error': 'carrera_id, ciclo_id inválidos o carrera/ciclo no encontrados.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Parámetros carrera_id o ciclo_id faltantes.'}, status=400)
+
+

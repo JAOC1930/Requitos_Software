@@ -1,12 +1,71 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Crear asignacion</h2>
+<h2>Crear asignación</h2>
 
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
+  
+  <!-- Script para cargar los ciclos al seleccionar una carrera -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function load_ciclos() {
+      const carrera_id = $('#id_carrera').val();
+      $.ajax({
+        url: '{% url "calendarapp:get_ciclos" %}',
+        data: { 'carrera_id': carrera_id },
+        success: function(data) {
+          const ciclo_field = $('#id_ciclo');
+          ciclo_field.html(data);
+          ciclo_field.prop('disabled', false);
+          load_materias(); // Cargar materias al cambiar la carrera
+        },
+        error: function() {
+          // Si hay un error o no hay ciclos disponibles, deshabilitar y vaciar el campo de ciclo
+          const ciclo_field = $('#id_ciclo');
+          ciclo_field.html('<option value="" selected>---------</option>');
+          ciclo_field.prop('disabled', true);
+          load_materias(); // Cargar materias al cambiar la carrera
+        },
+      });
+    }
+
+    function load_materias() {
+      const carrera_id = $('#id_carrera').val();
+      const ciclo_id = $('#id_ciclo').val();
+      $.ajax({
+        url: '{% url "calendarapp:get_materias" %}',
+        data: { 'carrera_id': carrera_id, 'ciclo_id': ciclo_id },
+        success: function(data) {
+          // ...
+        },
+        error: function() {
+          // ...
+        },
+      });
+    }
+
+
+    $(document).ready(function() {
+      // Cargar los ciclos al cargar la página si ya hay una carrera seleccionada
+      if ($('#id_carrera').val()) {
+        load_ciclos();
+      }
+
+      // Manejar el cambio de carrera
+      $('#id_carrera').on('change', function() {
+        load_ciclos();
+      });
+
+      // Manejar el cambio de ciclo
+      $('#id_ciclo').on('change', function() {
+        load_materias();
+      });
+    });
+  </script>
+  
   <button type="submit">Guardar</button>
 </form>
 
-{% endblock %}
+{% endblock content %}

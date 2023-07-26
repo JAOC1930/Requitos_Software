@@ -1,7 +1,7 @@
 from django.forms import ModelForm, DateInput
 from calendarapp.models import Event, EventMember
 from django import forms
-from calendarapp.models.archivos import Archivos, Asignacion
+from calendarapp.models.archivos import *
 
 class EventForm(ModelForm):
     class Meta:
@@ -75,3 +75,15 @@ class AsignacionForm(forms.ModelForm):
         super(AsignacionForm, self).__init__(*args, **kwargs)
         self.fields["fecha_inicial"].input_formats = ("%Y-%m-%d %H:%M:%S",)
         self.fields["fecha_final"].input_formats = ("%Y-%m-%d %H:%M:%S",)
+
+        # Personalizar el campo de carrera como dropdown
+        self.fields['carrera'].widget = forms.Select(attrs={'class': 'form-control', 'onchange': 'load_ciclos();'})
+        self.fields['carrera'].queryset = Carrera.objects.all()
+
+        # Personalizar el campo de ciclo como dropdown
+        self.fields['ciclo'].widget = forms.Select(attrs={'class': 'form-control', 'onchange': 'load_materias();', 'disabled': 'disabled'})
+        self.fields['ciclo'].queryset = Ciclo.objects.none()
+
+        # Personalizar el campo de materia como dropdown
+        self.fields['materia'].widget = forms.Select(attrs={'class': 'form-control', 'disabled': 'disabled'})
+        self.fields['materia'].queryset = Materia.objects.none()
