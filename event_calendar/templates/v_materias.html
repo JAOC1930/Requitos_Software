@@ -4,13 +4,13 @@
 <div>
     <h1>Materias del ciclo: {{ ciclo.numCiclo }}</h1>
     {% if materias %}
-        <ul>
+        <div class="container">
             {% for materia in materias %}
-                <li>
+                <div class="carrera">
                     <a href="{% url 'calendarapp:v_archivoM' materia.id %}">{{ materia.nombre }}</a>
-                </li>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
         <p>No hay materias asociadas a este ciclo.</p>
     {% endif %}

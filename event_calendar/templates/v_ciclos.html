@@ -7,7 +7,7 @@
         <div class="container">
             {% for carrera_ciclo in ciclos %}
                 <div class="carrera">
-                    <a href="{% url 'calendarapp:v_materias' carrera_ciclo.id %}">{{ carrera_ciclo.ciclo.numCiclo }}</a>
+                    <a href="{% url 'calendarapp:v_materias' carrera_ciclo.id %}">Ciclo N° {{ carrera_ciclo.ciclo.numCiclo }}</a>
                 </div>
             {% endfor %}
         </div>
