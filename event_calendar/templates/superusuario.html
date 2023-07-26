@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Superusuario</title>
+</head>
+<body>
+    {% if superusuario %}
+        <h1>Superusuario:</h1>
+        <p>Nombre de usuario: {{ superusuario.username }}</p>
+        <p>Email: {{ superusuario.email }}</p>
+    {% else %}
+        <p>No se encontró superusuario.</p>
+    {% endif %}
+</body>
+</html>     

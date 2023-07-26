@@ -3,14 +3,10 @@ from calendarapp.forms import ArchivoForm, AsignacionForm
 from calendarapp.models.archivos import Archivos, Asignacion, Carrera, Ciclo, Materia, CarreraCiclo
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from calendarapp.models import EventMember, Event
-from calendarapp.forms import EventForm, AddMemberForm
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
-from django.http import JsonResponse
-from django.core.exceptions import ObjectDoesNotExist
-
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from calendarapp.models import Event
 
 @login_required
 def upload_file(request):
@@ -39,8 +35,17 @@ def agregar_asignacion(request):
 
             # Obtener el usuario seleccionado en el formulario
             user = form.cleaned_data['user']
+            event = Event(
+                user=form.cleaned_data['user'],  # Asignar el usuario actual (requiere que el usuario esté autenticado)
+                title=form.cleaned_data['nombre'],
+                description=form.cleaned_data['descripcion'],
+                start_time=form.cleaned_data['fecha_inicial'],
+                end_time=form.cleaned_data['fecha_final']
+            )
 
-            # Enviar el correo electrónico
+            # Guardar la instancia del modelo en la base de datos
+            event.save()
+            # Enviar el correo el   ectrónico
             send_mail(
                 subject='Asignación exitosa',
                 message=f'Hola {user.email}, se ha asignado la tarea "{asignacion.nombre}".\nFecha de inicio: {asignacion.fecha_inicial}.\nFecha de entrega: {asignacion.fecha_final}.\nDescripción: {asignacion.descripcion}',
@@ -89,5 +94,6 @@ def obtenerArchivoM(request, id):
 
     return render(request, 'v_archivosM.html', {'materias': materia, 'archivos': archivos})
 
-
-
+def obtener_superusuario(request):
+    superusuario = User.objects.filter(is_superuser=True).first()
+    return render(request, 'superusuario.html', {'superusuario': superusuario})

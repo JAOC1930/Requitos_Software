@@ -1,7 +1,7 @@
 from django.views.generic import ListView
 
 from calendarapp.models import Event
-
+from django.shortcuts import render
 
 class AllEventsListView(ListView):
     """ All event list views """
@@ -21,3 +21,4 @@ class RunningEventsListView(ListView):
 
     def get_queryset(self):
         return Event.objects.get_running_events(user=self.request.user)
+
