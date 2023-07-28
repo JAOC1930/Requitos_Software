@@ -33,6 +33,5 @@ urlpatterns = [
     path('visualizar/ciclo/<int:id_carrera>/', archivo.obtener_Ciclo, name='v_ciclo'),
     path('visualizar/materia/<int:id>', archivo.obtener_Materia, name='v_materias'),
     path('visualizar/archivo/materia/<int:id>', archivo.obtenerArchivoM, name='v_archivoM'),
-    path('superusuario/', archivo.obtener_superusuario, name='superusuario'),
 ]   
 

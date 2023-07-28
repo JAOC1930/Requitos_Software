@@ -161,9 +161,10 @@
                     <a class="app-menu__item" href="{% url 'calendarapp:upload_file' %}"><i class="app-menu__icon fa fa-file-code-o"></i><span class="app-menu__label">Repositorio</span></a>
                 </li>
                 <li><a class="app-menu__item" href="{% url 'calendarapp:archivos_subidos' %}"><i class="app-menu__icon fa fa-file-pdf-o"></i><span class="app-menu__label">Visualizar Archivos</span></a></li>
-                <li><a class="app-menu__item" href="{% url 'calendarapp:crear_asignacion' %}"><i class="app-menu__icon fa fa-thumb-tack"></i><span class="app-menu__label">Crear asignacion</span></a></li>
-                <li><a class="app-menu__item" href="{% url 'calendarapp:visualizar' %}"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Carreras</span></a></li>
-
+                {% if user.is_superuser %}
+                    <li><a class="app-menu__item" href="{% url 'calendarapp:crear_asignacion' %}"><i class="app-menu__icon fa fa-thumb-tack"></i><span class="app-menu__label">Crear asignacion</span></a></li>
+                    <li><a class="app-menu__item" href="{% url 'calendarapp:visualizar' %}"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Carreras</span></a></li>
+                {% endif %}
             </ul>
         </aside>
         <main class="app-content">

@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect
 from calendarapp.forms import ArchivoForm, AsignacionForm
 from calendarapp.models.archivos import Archivos, Asignacion, Carrera, Ciclo, Materia, CarreraCiclo
-from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.urls import reverse_lazy, reverse
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from calendarapp.models import Event
+from django.contrib.auth.decorators import user_passes_test, login_required
+from django.http import HttpResponseForbidden
+
+
+def es_superusuario(user):
+    return user.is_superuser
 
 @login_required
 def upload_file(request):
@@ -22,11 +26,14 @@ def upload_file(request):
     else:
         form = ArchivoForm(user=request.user)  # También pasamos request.user aquí
     return render(request, 'archivo.html', {'form': form})
-    
+
+@login_required    
 def archivos_subidos(request):
     archivos = Archivos.objects.filter(user=request.user)
     return render(request, 'archivos_subidos.html', {'archivos': archivos})    
 
+@login_required
+@user_passes_test(es_superusuario, login_url=None)
 def agregar_asignacion(request):
     if request.method == 'POST':
         form = AsignacionForm(request.POST)
@@ -60,10 +67,14 @@ def agregar_asignacion(request):
         
     return render(request, 'agregar_asignacion.html', {'form': form})
 
+@login_required
+@user_passes_test(es_superusuario, login_url=None)
 def visualizar(request):
     carrera = Carrera.objects.all()
     return render(request, 'visualizar.html', {'carreras': carrera})
 
+@login_required
+@user_passes_test(es_superusuario, login_url=None)
 def obtener_Ciclo(request, id_carrera):
     try:
         carrera = Carrera.objects.get(pk=id_carrera)
@@ -74,6 +85,7 @@ def obtener_Ciclo(request, id_carrera):
 
     return render(request, 'v_ciclos.html', {'ciclos': ciclos, 'carreras': carrera})
 
+@login_required
 def obtener_Materia(request, id):
     try:
         ciclo = Ciclo.objects.get(pk=id)
@@ -84,6 +96,8 @@ def obtener_Materia(request, id):
 
     return render(request, 'v_materias.html', {'ciclo': ciclo, 'materias': materias})
 
+@login_required
+@user_passes_test(es_superusuario, login_url=None)
 def obtenerArchivoM(request, id):
     try:
         materia = Materia.objects.get(pk=id)
@@ -94,6 +108,3 @@ def obtenerArchivoM(request, id):
 
     return render(request, 'v_archivosM.html', {'materias': materia, 'archivos': archivos})
 
-def obtener_superusuario(request):
-    superusuario = User.objects.filter(is_superuser=True).first()
-    return render(request, 'superusuario.html', {'superusuario': superusuario})
