@@ -3,7 +3,7 @@ from accounts.models import User
 from datetime import datetime
 
 class Carrera(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=100)
     def __str__(self):
             return "%s" % (self.nombre)    
 
@@ -25,7 +25,7 @@ class CarreraCiclo(models.Model):
 
 
 class Materia(models.Model):
-    nombre = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=100)
     numCreditos = models.IntegerField()
     numHoras = models.IntegerField()
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name="materia_carrera")
@@ -36,7 +36,7 @@ class Materia(models.Model):
 
 class Asignacion(models.Model):
 
-    nombre = models.CharField(max_length=30)
+    nombre = models.CharField(max_length=100)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name="asignacion_carrera")
     ciclo = models.ForeignKey(Ciclo, on_delete=models.CASCADE, related_name="asignacion_ciclo")
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE, related_name="asignacion_materia")
