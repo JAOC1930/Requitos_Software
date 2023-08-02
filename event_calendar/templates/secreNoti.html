@@ -1,5 +1,7 @@
 {% extends "base.html" %}
-
+{% block extracss %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"> 
+{% endblock extracss %}
 
 {% block content %}
 
@@ -11,6 +13,7 @@
       <th>Asignación</th>
       <th>Carrera</th>
       <th>Ciclo</th>
+      <th>Materia</th>
       <th>Opciones</th>
     </tr>
   </thead>
@@ -21,6 +24,7 @@
     <td>{{l.nombre}}</td>
     <td>{{l.carrera}}</td>
     <td>{{l.ciclo}}</td>
+    <td>{{l.materia}}</td>
     <td> <a href="{% url 'calendarapp:notificar' l.id %}">Notificar</a>
     </td>
 
@@ -29,6 +33,7 @@
 </table>
 
 {% block extrascripts %}
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>      
 <script type="text/javascript">
     $(document).ready( function () {
