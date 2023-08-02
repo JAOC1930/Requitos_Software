@@ -46,8 +46,7 @@ class Asignacion(models.Model):
     descripcion = models.CharField(max_length= 200)
 
     def __str__(self):
-            return "%s %s %s %s %s" % (self.nombre,
-                    self.carrera, self.ciclo, self.materia, self.user)
+            return "%s" % (self.nombre)
     
 
 class Archivos(models.Model):

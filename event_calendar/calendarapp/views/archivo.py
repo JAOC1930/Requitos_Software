@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from calendarapp.models import Event
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponseForbidden
-
+from django.urls import reverse
 
 def es_superusuario(user):
     return user.is_superuser
@@ -15,17 +15,20 @@ def es_superusuario(user):
 @login_required
 def upload_file(request):
     if request.method == 'POST':
-        form = ArchivoForm(request.user, request.POST, request.FILES)  # Pasamos request.user como argumento
+        form = ArchivoForm(request.user, request.POST, request.FILES)
         if form.is_valid():
             archivo = form.cleaned_data['archivo']
             if archivo:
                 nuevo_archivo = form.save(commit=False)
                 nuevo_archivo.user = request.user
+                nuevo_archivo.asignacion = form.cleaned_data['asignacion']  # Accede al valor del campo 'asignacion' del formulario
                 nuevo_archivo.save()
             return redirect(request.path)
     else:
-        form = ArchivoForm(user=request.user)  # También pasamos request.user aquí
+        form = ArchivoForm(user=request.user)
     return render(request, 'archivo.html', {'form': form})
+
+
 
 @login_required    
 def archivos_subidos(request):
@@ -107,4 +110,23 @@ def obtenerArchivoM(request, id):
         archivos = []
 
     return render(request, 'v_archivosM.html', {'materias': materia, 'archivos': archivos})
+
+def secreNoti(request):
+    asignacion = Asignacion.objects.all()
+    diccionario = {'asignaciones': asignacion}
+    return render(request, 'secreNoti.html', diccionario)
+
+
+def notificar(request, id):
+    asignacion = Asignacion.objects.get(pk=id)
+    noti = asignacion.user
+    send_mail(
+                subject='Asignación exitosa',
+                message=f'Por favor hacer la entrega del proyecto que se encuentra disponible hasta {asignacion.fecha_final}',
+                from_email='tu_correo@gmail.com',  # Coloca aquí tu correo desde el que enviarás los correos
+                recipient_list=[noti],
+                fail_silently=False,
+            )
+    
+    return redirect(reverse('calendarapp:visualizar'))
 

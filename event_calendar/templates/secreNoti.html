@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<table id="tabla_datos">
+
+  <thead>
+    <tr>
+      <th>Usuario</th>
+      <th>Asignación</th>
+      <th>Carrera</th>
+      <th>Ciclo</th>
+      <th>Opciones</th>
+    </tr>
+  </thead>
+
+  {% for l in asignaciones %}
+  <tr>
+    <td>{{l.user}}</td>
+    <td>{{l.nombre}}</td>
+    <td>{{l.carrera}}</td>
+    <td>{{l.ciclo}}</td>
+    <td> <a href="{% url 'calendarapp:notificar' l.id %}">Notificar</a>
+    </td>
+
+  </tr>
+  {% endfor %}
+</table>
+
+{% block extrascripts %}
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>      
+<script type="text/javascript">
+    $(document).ready( function () {
+      $('#tabla_datos').DataTable();
+    });
+</script>
+{% endblock extrascripts %}
+
+{% endblock %}

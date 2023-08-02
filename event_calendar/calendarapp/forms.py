@@ -46,10 +46,14 @@ class ArchivoForm(forms.ModelForm):
     def __init__(self, user=None, *args, **kwargs):
         super(ArchivoForm, self).__init__(*args, **kwargs)
         self.fields['materia'].queryset = Materia.objects.filter(asignacion_materia__user=user)
+    
+    # Agregar campo de asignación al formulario
+    asignacion = forms.ModelChoiceField(queryset=Asignacion.objects.all(), label='Asignación')
 
     class Meta:
         model = Archivos
-        fields = ['materia', 'archivo']
+        fields = ['materia', 'asignacion', 'archivo']
+
 
 class AsignacionForm(forms.ModelForm):
     fecha_inicial = forms.DateTimeField(
