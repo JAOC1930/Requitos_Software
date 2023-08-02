@@ -91,14 +91,16 @@
                 <th>Periodo</th>
                 <th>Materia</th>
                 <th>Carrera</th>
+                <th>Opciones</th>
             </tr>
             {% for archivo in archivos %}
                 <tr class="archivo-row" data-materia="{{ archivo.materia.nombre }}">
                     <td>{{ archivo.archivo.name }}</td>
                     <td>{{ archivo.fecha_subida }}</td>
-                    <td>Abril-Agosto 2023</td>
+                    <td>Noviembre-Febrero 2024</td>
                     <td>{{ archivo.materia.nombre }}</td>
                     <td>{{ archivo.materia.carrera.nombre }}</td>
+                    <td><a href="">Actualizar</a></td>
                 </tr>
             {% endfor %}
         </table>
