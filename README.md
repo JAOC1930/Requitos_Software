@@ -1,7 +1,5 @@
 # Universidad Técnica Particular de Loja
-# Facultad de Ingenierías y Arquitectura
 ## Computación
-## Ingeniería de requisitos
 ### “CodeCrafters”
 **Equipo:**
 - María Alejandra Paute Eras (Arquitecta)
@@ -16,5 +14,7 @@
 - Mgtr. Lorena Condolo
 
 **Sistema:** 	CheckList
+
+**Asignatura:** Ingeniería de requisitos
 
 Abril 2023 – Agosto 2023
